@@ -1,27 +1,65 @@
-import { TodoItem } from "./TodoItem"
-import { type ListOfTodos } from "../types";
+import React, { useState } from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useTodosContext } from "../Hooks/TodoContex";
+import { TodoItem } from "./TodoItem";
 
-interface Props {
-    todos : ListOfTodos
-    onRemoveTodo: (id: string) => void
-}
+export const Todos: React.FC = () => {
+  const { state, dispatch } = useTodosContext();
+    const [isEditing, setIsEditing] = useState<string>("");
+  const [parent] = useAutoAnimate();
 
-export const Todos : React.FC<Props> = ({ todos, onRemoveTodo }) => {
+  const filteredTodos = state.todos.filter((todo) => {
+    if (state.filterSelected === "active") return !todo.completed;
+    if (state.filterSelected === "completed") return todo.completed;
+    return true; 
+  });
+
+  const handleStartEditing = (id: string) => {
+    setIsEditing(id);
+  };
+
+  const handleCancelEditing = () => {
+    setIsEditing("");
+  };
+
+  const handleToggleCompleted = (id: string, completed: boolean) => {
+    dispatch({ type: "COMPLETED", payload: { id, completed } });
+  };
+
+  const handleRemove = (id: string) => {
+    dispatch({ type: "REMOVE", payload: { id } });
+  };
+
+  const handleUpdateTitle = ({ id, title }: { id: string; title: string }) => {
+    dispatch({ type: "UPDATE_TITLE", payload: { id, title } });
+    setIsEditing("");
+  };
+
   return (
-    <ul className="todo-list">
-      {todos.map(todo => (
-        <li
-            key={todo.id} 
-            className={todo.completed ? "completed" : ""}>
-            <TodoItem 
-                key={todo.id}
-                id = {todo.id}
-                title = {todo.title}
-                completed = {todo.completed}
-                onRemoveTodo = {onRemoveTodo}
+    <ul className="todo-list" ref={parent}>
+      {filteredTodos.map((todo) => {
+        const isCurrentlyEditing = isEditing === todo.id;
+
+        return (
+          <li
+            key={todo.id}
+            className={`
+              ${todo.completed ? "completed" : ""}
+              ${isCurrentlyEditing ? "editing" : ""}
+            `}
+          >
+            <TodoItem
+              {...todo}
+              isEditing={isCurrentlyEditing}
+              onStartEditing={handleStartEditing}
+              onCancelEditing={handleCancelEditing}
+              onToggleCompleted={handleToggleCompleted}
+              onRemove={handleRemove}
+              onUpdateTitle={handleUpdateTitle}
             />
-        </li>
-      ))}
+          </li>
+        );
+      })}
     </ul>
   );
 };
