@@ -36,7 +36,6 @@ const App: React.FC = () => {
           onClearCompleted={handleClearCompleted}
         />
       </div>
-      <Copyright />
     </>
   )
 }
