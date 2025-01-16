@@ -7,11 +7,9 @@ const initialState = {
   sync: false,
   todos: [],
   filterSelected: (() => {
-    // read from url query params using URLSearchParams
     const params = new URLSearchParams(window.location.search)
     const filter = params.get('filter') as FilterValue | null
     if (filter === null) return TODO_FILTERS.ALL
-    // check filter is valid, if not return ALL
     return Object
       .values(TODO_FILTERS)
       .includes(filter)

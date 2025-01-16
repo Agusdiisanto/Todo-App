@@ -1,9 +1,10 @@
 import type { TODO_FILTERS } from './consts'
 
 export interface Todo {
-  id: string
-  title: string
-  completed: boolean
+  id: string;
+  title: string;
+  completed: boolean;
+  category: string;
 }
 
 export type TodoId = Pick<Todo, 'id'>

@@ -1,7 +1,6 @@
-import { Copyright } from './components/Copyright'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
-import { Todos } from './components/Todos'
+import { Todos } from './components/Todos/Todos'
 import { useTodos } from './hooks/useTodos'
 
 const App: React.FC = () => {
