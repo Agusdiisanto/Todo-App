@@ -1,8 +1,7 @@
 import { CreateTodo } from './Create/CreateTodo'
-import { Todo } from './Todo/Todo';
 
 interface Props {
-  saveTodo: (title: string) => void
+  saveTodo: (title: string, category: string) => void;
 }
 
 export const Header: React.FC<Props> = ({ saveTodo }) => {

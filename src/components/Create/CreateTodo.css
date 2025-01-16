@@ -1,105 +1,114 @@
 .create-todo-container {
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 500px;
+}
+
+.input-wrapper:focus-within {
+  border-color: #6c63ff;
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+}
+
+.category-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  margin-right: 15px;
+  font-size: 20px;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.category-button:hover {
+  background-color: #f0f0f0;
+  border-color: #6c63ff;
+  transform: scale(1.1);
+}
+
+.category-menu {
+  position: absolute;
+  top: 70px;
+  left: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+  width: 200px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  .input-wrapper {
-    display: flex;
-    align-items: center;
-    border: 2px solid #ddd;
-    border-radius: 50px;
-    padding: 10px 15px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .input-wrapper:focus-within {
-    border-color: #6c63ff;
-    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
-  }
-  
-  .category-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    border: 2px solid #ddd;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    margin-right: 15px;
-    font-size: 24px; 
-    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .category-button:hover {
-    background-color: #f0f0f0;
-    border-color: #6c63ff;
-    transform: scale(1.1); 
-  }
-  
-  .category-menu {
-    position: absolute;
-    top: 70px;
-    left: 15px;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    animation: fadeIn 0.3s ease;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .category-option {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.2s ease;
-  }
-  
-  .category-option:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .category-option span {
-    margin-left: 10px;
-    font-size: 14px;
-  }
-  
-  .new-todo {
-    flex: 1;
-    height: 35px !important;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    padding: 5px;
-    background-color: transparent;
-  }
-  
-  .new-todo::placeholder {
-    color: #aaa;
-  }
-  
-  .new-todo:focus {
-    outline: none; 
-    box-shadow: none; 
-  }
-  
+}
+
+.category-option {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.category-option:hover {
+  background-color: #f5f5f5;
+  transform: scale(1.05);
+}
+
+.category-option.selected {
+  background-color: #e0e0ff;
+  color: #6c63ff;
+  font-weight: bold;
+}
+
+.category-option span {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.new-todo {
+  flex: 1;
+  border: none;
+  outline: none; 
+  font-size: 16px;
+  padding: 5px;
+  background-color: transparent;
+}
+
+.new-todo:focus {
+  outline: none; 
+  box-shadow: none; 
+  border: none; 
+}
+
+.new-todo::placeholder {
+  color: #aaa;
+}

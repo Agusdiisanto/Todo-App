@@ -1,5 +1,14 @@
 import { useState } from 'react';
-import { FaCoffee, FaBriefcase, FaShoppingCart, FaPlusCircle } from 'react-icons/fa';
+import {
+  FaCoffee,
+  FaBriefcase,
+  FaShoppingCart,
+  FaCar,
+  FaHeart,
+  FaTree,
+  FaUtensils,
+  FaPlusCircle,
+} from 'react-icons/fa';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import './CreateTodo.css';
 
@@ -9,15 +18,19 @@ interface Props {
 
 export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
   const [inputValue, setInputValue] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [parent] = useAutoAnimate<HTMLDivElement>();
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter' && inputValue.trim() !== '') {
-      saveTodo(inputValue.trim(), selectedCategory || 'Uncategorized');
+      if (!selectedCategory) {
+        alert('Por favor, selecciona una categoría antes de guardar.');
+        return;
+      }
+      saveTodo(inputValue.trim(), selectedCategory);
       setInputValue('');
-      setSelectedCategory('');
+      setSelectedCategory(''); 
     }
   };
 
@@ -25,6 +38,10 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
     { icon: <FaCoffee />, value: 'Relax' },
     { icon: <FaBriefcase />, value: 'Work' },
     { icon: <FaShoppingCart />, value: 'Shopping' },
+    { icon: <FaCar />, value: 'Travel' },
+    { icon: <FaHeart />, value: 'Health' },
+    { icon: <FaTree />, value: 'Nature' },
+    { icon: <FaUtensils />, value: 'Food' },
   ];
 
   return (
@@ -34,18 +51,19 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
           className="category-button"
           onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
           title="Seleccionar categoría"
+          aria-haspopup="true"
+          aria-expanded={isCategoryMenuOpen}
         >
           {selectedCategory
             ? categories.find((c) => c.value === selectedCategory)?.icon
             : <FaPlusCircle />}
         </button>
-
         {isCategoryMenuOpen && (
           <div className="category-menu">
             {categories.map((category) => (
               <div
                 key={category.value}
-                className="category-option"
+                className={`category-option ${selectedCategory === category.value ? 'selected' : ''}`}
                 onClick={() => {
                   setSelectedCategory(category.value);
                   setIsCategoryMenuOpen(false);
@@ -56,7 +74,6 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
             ))}
           </div>
         )}
-
         <input
           className="new-todo"
           value={inputValue}
