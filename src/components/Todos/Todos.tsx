@@ -1,6 +1,7 @@
 import { Todo } from '../Todo/Todo';
 import type { Todo as TodoType } from '../../types';
 import { useState } from 'react';
+import { AiOutlineUp, AiOutlineDown, AiOutlineInbox } from 'react-icons/ai'; 
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import './Todos.css';
 
@@ -61,6 +62,12 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
 
   return (
     <div className="todos-container">
+      {todos.length === 0 && (
+        <div className="empty-state">
+          <AiOutlineInbox className="empty-icon" />
+          <p className="empty-text">No hay tareas</p>
+        </div>
+      )}
       {categories.map((cat) => {
         const tasks = todos.filter((t) => t.category === cat);
         return (
@@ -70,7 +77,7 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
                 {cat} <span className="task-count">({tasks.length})</span>
               </h2>
               <button className="toggle-button">
-                {openCategories[cat] ? '▲' : '▼'}
+                {openCategories[cat] ? <AiOutlineUp /> : <AiOutlineDown />}
               </button>
             </div>
             <ul
@@ -80,32 +87,39 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
               onDragLeave={handleDragLeave}
               onDrop={(e) => handleDrop(e, cat)}
             >
-              {tasks.map((todo) => (
-                <li
-                  key={todo.id}
-                  className={`todo-item ${
-                    todo.completed ? 'completed' : ''
-                  } ${isEditing === todo.id ? 'editing' : ''}`}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, todo.id)}
-                  onDragEnd={handleDragEnd}
-                  onDoubleClick={() => setIsEditing(todo.id)}
-                >
-                  <Todo
-                    id={todo.id}
-                    title={todo.title}
-                    category={todo.category}
-                    completed={todo.completed}
-                    setCompleted={setCompleted}
-                    setTitle={({ id, title, category }) => {
-                      setTitle({ id, title, category });
-                    }}
-                    removeTodo={removeTodo}
-                    isEditing={isEditing}
-                    setIsEditing={setIsEditing}
-                  />
-                </li>
-              ))}
+              {tasks.length === 0 ? (
+                <div className="empty-state">
+                  <AiOutlineInbox className="empty-icon" />
+                  <p className="empty-text">Vacio</p>
+                </div>
+              ) : (
+                tasks.map((todo) => (
+                  <li
+                    key={todo.id}
+                    className={`todo-item ${
+                      todo.completed ? 'completed' : ''
+                    } ${isEditing === todo.id ? 'editing' : ''}`}
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, todo.id)}
+                    onDragEnd={handleDragEnd}
+                    onDoubleClick={() => setIsEditing(todo.id)}
+                  >
+                    <Todo
+                      id={todo.id}
+                      title={todo.title}
+                      category={todo.category}
+                      completed={todo.completed}
+                      setCompleted={setCompleted}
+                      setTitle={({ id, title, category }) => {
+                        setTitle({ id, title, category });
+                      }}
+                      removeTodo={removeTodo}
+                      isEditing={isEditing}
+                      setIsEditing={setIsEditing}
+                    />
+                  </li>
+                ))
+              )}
             </ul>
           </div>
         );

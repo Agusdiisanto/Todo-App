@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   FaCoffee,
   FaBriefcase,
@@ -18,6 +18,7 @@ interface Props {
 
 export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
   const [inputValue, setInputValue] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [parent] = useAutoAnimate<HTMLDivElement>();
@@ -25,7 +26,7 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter' && inputValue.trim() !== '') {
       if (!selectedCategory) {
-        alert('Por favor, selecciona una categoría antes de guardar.');
+        setError('Por favor, selecciona una categoría antes de guardar.');
         return;
       }
       saveTodo(inputValue.trim(), selectedCategory);
@@ -33,6 +34,13 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
       setSelectedCategory(''); 
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      const timeout = setTimeout(() => setError(null), 3000); 
+      return () => clearTimeout(timeout);
+    }
+  }, [error]);
 
   const categories = [
     { icon: <FaCoffee />, value: 'Relax' },
@@ -83,6 +91,7 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
           autoFocus
         />
       </div>
+      {error && <div className="toast">{error}</div>}
     </div>
   );
 };

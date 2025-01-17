@@ -112,3 +112,34 @@
 .new-todo::placeholder {
   color: #aaa;
 }
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 69, 58, 0.9); 
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  font-weight: 500;
+  animation: slide-in-out 3s ease forwards;
+  z-index: 1000;
+}
+
+@keyframes slide-in-out {
+  0% {
+    transform: translateX(-50%) translateY(30px);
+    opacity: 0;
+  }
+  10%, 90% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(30px);
+    opacity: 0;
+  }
+}
