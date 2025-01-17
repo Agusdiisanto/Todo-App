@@ -1,0 +1,16 @@
+# Excluir la configuración de entorno
+.env
+
+# Ignorar dependencias específicas de npm
+node_modules/
+
+# Ignorar logs
+*.log
+
+# Ignorar el lockfile de npm si no es necesario
+package-lock.json
+
+# Ignorar archivos de cache y configuraciones locales
+.DS_Store
+.idea/
+.vscode/

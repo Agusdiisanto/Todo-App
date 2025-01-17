@@ -1,8 +1,8 @@
 import { Todo } from '../Todo/Todo';
 import type { Todo as TodoType } from '../../types';
-import { useState } from 'react';
-import { AiOutlineUp, AiOutlineDown, AiOutlineInbox } from 'react-icons/ai'; 
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import React, { useState } from 'react';
+import { AiOutlineUp, AiOutlineDown, AiOutlineInbox } from 'react-icons/ai';
+import { motion, AnimatePresence } from 'framer-motion';
 import './Todos.css';
 
 interface Props {
@@ -14,7 +14,6 @@ interface Props {
 
 export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTodo }) => {
   const [isEditing, setIsEditing] = useState('');
-  const [parent] = useAutoAnimate();
   const categories = Array.from(new Set(todos.map((t) => t.category)));
   const [openCategories, setOpenCategories] = useState(() => {
     const initial: Record<string, boolean> = {};
@@ -24,32 +23,71 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
     return initial;
   });
 
-  const toggleCategory = (cat: string) => {
+  const containerVariants = {
+    open: {
+      height: 'auto',
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+        ease: 'easeInOut',
+      },
+    },
+    closed: {
+      height: 0,
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+        ease: 'easeInOut',
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 80,
+        damping: 15,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: -10,
+      transition: {
+        duration: 0.2,
+      },
+    },
+  };
+
+  const toggleCategory = (cat: string): void => {
     setOpenCategories((prev) => ({
       ...prev,
       [cat]: !prev[cat],
     }));
   };
 
-  const handleDragStart = (e: React.DragEvent<HTMLLIElement>, todoId: string) => {
+  const handleDragStart = (e: React.DragEvent<HTMLLIElement>, todoId: string): void => {
     e.dataTransfer.setData('text/plain', todoId);
     e.currentTarget.classList.add('dragging');
   };
 
-  const handleDragEnd = (e: React.DragEvent<HTMLLIElement>) => {
+  const handleDragEnd = (e: React.DragEvent<HTMLLIElement>): void => {
     e.currentTarget.classList.remove('dragging');
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLUListElement>) => {
+  const handleDragOver = (e: React.DragEvent<HTMLUListElement>): void => {
     e.preventDefault();
     e.currentTarget.classList.add('drop-target');
   };
 
-  const handleDragLeave = (e: React.DragEvent<HTMLUListElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLUListElement>): void => {
     e.currentTarget.classList.remove('drop-target');
   };
 
-  const handleDrop = (e: React.DragEvent<HTMLUListElement>, newCategory: string) => {
+  const handleDrop = (e: React.DragEvent<HTMLUListElement>, newCategory: string): void => {
     e.preventDefault();
     e.currentTarget.classList.remove('drop-target');
     const droppedId = e.dataTransfer.getData('text/plain');
@@ -68,8 +106,10 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
           <p className="empty-text">No hay tareas</p>
         </div>
       )}
+
       {categories.map((cat) => {
         const tasks = todos.filter((t) => t.category === cat);
+
         return (
           <div key={cat} className="category-section">
             <div className="category-header" onClick={() => toggleCategory(cat)}>
@@ -80,47 +120,74 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
                 {openCategories[cat] ? <AiOutlineUp /> : <AiOutlineDown />}
               </button>
             </div>
-            <ul
-              className={`todo-list ${!openCategories[cat] ? 'hidden' : ''}`}
-              ref={parent}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={(e) => handleDrop(e, cat)}
-            >
-              {tasks.length === 0 ? (
-                <div className="empty-state">
-                  <AiOutlineInbox className="empty-icon" />
-                  <p className="empty-text">Vacio</p>
-                </div>
-              ) : (
-                tasks.map((todo) => (
-                  <li
-                    key={todo.id}
-                    className={`todo-item ${
-                      todo.completed ? 'completed' : ''
-                    } ${isEditing === todo.id ? 'editing' : ''}`}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, todo.id)}
-                    onDragEnd={handleDragEnd}
-                    onDoubleClick={() => setIsEditing(todo.id)}
-                  >
-                    <Todo
-                      id={todo.id}
-                      title={todo.title}
-                      category={todo.category}
-                      completed={todo.completed}
-                      setCompleted={setCompleted}
-                      setTitle={({ id, title, category }) => {
-                        setTitle({ id, title, category });
-                      }}
-                      removeTodo={removeTodo}
-                      isEditing={isEditing}
-                      setIsEditing={setIsEditing}
-                    />
-                  </li>
-                ))
+            <AnimatePresence initial={false}>
+              {openCategories[cat] && (
+                <motion.ul
+                  key={cat}
+                  className="todo-list"
+                  style={{ overflow: 'hidden' }}
+                  variants={containerVariants}
+                  initial="closed"
+                  animate="open"
+                  exit="closed"
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={(e) => handleDrop(e, cat)}
+                >
+                  <AnimatePresence>
+                    {tasks.length === 0 ? (
+                      <motion.div
+                        key="empty-state"
+                        className="empty-state"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <AiOutlineInbox className="empty-icon" />
+                        <p className="empty-text">Vacio</p>
+                      </motion.div>
+                    ) : (
+                      tasks.map((todo) => (
+                        <motion.li
+                          key={todo.id}
+                          className={`todo-item ${
+                            todo.completed ? 'completed' : ''
+                          } ${isEditing === todo.id ? 'editing' : ''}`}
+                          draggable
+                          onDragStart={(e) => handleDragStart(e, todo.id)}
+                          onDragEnd={handleDragEnd}
+                          onDoubleClick={() => setIsEditing(todo.id)}
+                          variants={itemVariants}
+                          initial="hidden"
+                          animate="visible"
+                          exit="exit"
+                          layout
+                          whileHover={{
+                            scale: 1.02,
+                            boxShadow: '0 6px 15px rgba(0, 0, 0, 0.15)',
+                          }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <Todo
+                            id={todo.id}
+                            title={todo.title}
+                            category={todo.category}
+                            completed={todo.completed}
+                            setCompleted={setCompleted}
+                            setTitle={({ id, title, category }) =>
+                              setTitle({ id, title, category })
+                            }
+                            removeTodo={removeTodo}
+                            isEditing={isEditing}
+                            setIsEditing={setIsEditing}
+                          />
+                        </motion.li>
+                      ))
+                    )}
+                  </AnimatePresence>
+                </motion.ul>
               )}
-            </ul>
+            </AnimatePresence>
           </div>
         );
       })}
