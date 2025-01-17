@@ -21,7 +21,7 @@ type Action =
   | { type: 'FILTER_CHANGE'; payload: { filter: FilterValue } }
   | { type: 'REMOVE'; payload: { id: string } }
   | { type: 'SAVE'; payload: { title: string; category: string } }
-  | { type: 'UPDATE_TITLE'; payload: { id: string; title: string } };
+  | { type: 'UPDATE_TITLE'; payload: { id: string; title: string; category: string } };
 
 interface State {
   sync: boolean;
@@ -87,7 +87,7 @@ const reducer = (state: State, action: Action): State => {
     const newTodo = {
       id: crypto.randomUUID(),
       title,
-      category: category || 'Uncategorized', // Ensure a fallback category
+      category: category || 'Uncategorized', 
       completed: false,
     };
 
@@ -99,7 +99,7 @@ const reducer = (state: State, action: Action): State => {
   }
 
   if (action.type === 'UPDATE_TITLE') {
-    const { id, title } = action.payload;
+    const { id, title, category } = action.payload
     return {
       ...state,
       sync: true,
@@ -108,11 +108,12 @@ const reducer = (state: State, action: Action): State => {
           return {
             ...todo,
             title,
-          };
+            category 
+          }
         }
-        return todo;
-      }),
-    };
+        return todo
+      })
+    }
   }
 
   return state;
@@ -128,7 +129,7 @@ export const useTodos = (): {
   handleFilterChange: (filter: FilterValue) => void;
   handleRemove: (id: string) => void;
   handleSave: (title: string, category: string) => void;
-  handleUpdateTitle: (params: { id: string; title: string }) => void;
+  handleUpdateTitle: (params: { id: string; title: string; category: string }) => void;
 } => {
   const [{ sync, todos, filterSelected }, dispatch] = useReducer(reducer, initialState);
 
@@ -140,9 +141,9 @@ export const useTodos = (): {
     dispatch({ type: 'REMOVE', payload: { id } });
   };
 
-  const handleUpdateTitle = ({ id, title }: { id: string; title: string }): void => {
-    dispatch({ type: 'UPDATE_TITLE', payload: { id, title } });
-  };
+  const handleUpdateTitle = ({ id, title, category }: { id: string; title: string; category: string }) => {
+    dispatch({ type: 'UPDATE_TITLE', payload: { id, title, category } })
+  }
 
   const handleSave = (title: string, category: string): void => {
     dispatch({ type: 'SAVE', payload: { title, category } });

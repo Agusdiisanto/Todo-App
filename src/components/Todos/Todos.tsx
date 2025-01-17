@@ -7,7 +7,7 @@ import './Todos.css'
 interface Props {
   todos: TodoType[]
   setCompleted: (id: string, completed: boolean) => void
-  setTitle: (params: { id: string; title: string; category: string }) => void
+  setTitle: (params: { id: string; title: string; category: string }) => void;
   removeTodo: (id: string) => void
 }
 
