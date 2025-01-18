@@ -12,7 +12,7 @@ export const useTodos = (): {
   handleCompleted: (id: string, completed: boolean) => void
   handleFilterChange: (filter: FilterValue) => void
   handleRemove: (id: string) => void
-  handleSave: (title: string) => void
+  handleSave: (title: string, category: string) => void;
   handleUpdateTitle: (params: { id: string, title: string }) => void
 } => {
   const [todos, setTodos] = useState(mockTodos)
@@ -53,11 +53,12 @@ export const useTodos = (): {
     setTodos(newTodos)
   }
 
-  const handleSave = (title: string): void => {
+  const handleSave = (title: string, category: string): void => {
     const newTodo = {
       id: crypto.randomUUID(),
       title,
-      completed: false
+      completed: false,
+      category
     }
 
     setTodos([...todos, newTodo])
