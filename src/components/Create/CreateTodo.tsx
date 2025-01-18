@@ -11,6 +11,8 @@ import {
   FaPlusCircle,
 } from 'react-icons/fa';
 import './CreateTodo.css';
+import { translations } from '../../translation';
+import { useLanguage } from '../../hooks/lenguagueContext';
 
 interface Props {
   saveTodo: (title: string, category: string) => void;
@@ -21,11 +23,12 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
   const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
+  const { language } = useLanguage();
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter' && inputValue.trim() !== '') {
       if (!selectedCategory) {
-        setError('Por favor, selecciona una categoría antes de guardar.');
+        setError(translations[language].createTodo.errorNoCategory);
         return;
       }
       saveTodo(inputValue.trim(), selectedCategory);
@@ -42,13 +45,13 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
   }, [error]);
 
   const categories = [
-    { icon: <FaCoffee />, value: 'Relax' },
-    { icon: <FaBriefcase />, value: 'Work' },
-    { icon: <FaShoppingCart />, value: 'Shopping' },
-    { icon: <FaCar />, value: 'Travel' },
-    { icon: <FaHeart />, value: 'Health' },
-    { icon: <FaTree />, value: 'Nature' },
-    { icon: <FaUtensils />, value: 'Food' },
+    { icon: <FaCoffee />, value: 'relax' },
+    { icon: <FaBriefcase />, value: 'work' },
+    { icon: <FaShoppingCart />, value: 'shopping' },
+    { icon: <FaCar />, value: 'travel' },
+    { icon: <FaHeart />, value: 'health' },
+    { icon: <FaTree />, value: 'nature' },
+    { icon: <FaUtensils />, value: 'food' },
   ];
 
   return (
@@ -74,17 +77,18 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
             transition={{ duration: 0.3, ease: 'easeOut' }} 
           >
             {categories.map((category) => (
-              <div
-                key={category.value}
-                className={`category-option ${selectedCategory === category.value ? 'selected' : ''}`}
-                onClick={() => {
-                  setSelectedCategory(category.value);
-                  setIsCategoryMenuOpen(false);
-                }}
-              >
-                {category.icon} <span>{category.value}</span>
-              </div>
-            ))}
+            <div
+              key={category.value}
+              className={`category-option ${selectedCategory === category.value ? 'selected' : ''}`}
+              onClick={() => {
+                setSelectedCategory(category.value);
+                setIsCategoryMenuOpen(false);
+              }}
+            >
+              {category.icon}{' '}
+              <span>{translations[language].createTodo.categories[category.value as keyof typeof translations['en']['createTodo']['categories']]}</span>
+            </div>
+          ))}
           </motion.div>
         )}
         <input
@@ -92,8 +96,7 @@ export const CreateTodo: React.FC<Props> = ({ saveTodo }) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="¿Qué quieres hacer?"
-          autoFocus
+          placeholder={translations[language].createTodo.placeholder}
         />
       </div>
       {error && <div className="toast">{error}</div>}

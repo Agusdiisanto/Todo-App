@@ -1,7 +1,10 @@
-import { Footer } from './components/Footer'
-import { Header } from './components/Header'
-import { Todos } from './components/Todos/Todos'
-import { useTodos } from './hooks/useTodos'
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
+import { Todos } from './components/Todos/Todos';
+import { useTodos } from './hooks/useTodos';
+import { LanguageProvider, useLanguage } from './hooks/lenguagueContext';
+import { translations } from './translation';
+import "./App.css"
 
 const App: React.FC = () => {
   const {
@@ -14,12 +17,13 @@ const App: React.FC = () => {
     handleRemove,
     handleSave,
     handleUpdateTitle,
-    todos: filteredTodos
-  } = useTodos()
+    todos: filteredTodos,
+  } = useTodos();
 
   return (
-    <>
-      <div className='todoapp'>
+    <LanguageProvider>
+      <div className="todoapp">
+        <LanguageToggle />
         <Header saveTodo={handleSave} />
         <Todos
           removeTodo={handleRemove}
@@ -35,8 +39,20 @@ const App: React.FC = () => {
           onClearCompleted={handleClearCompleted}
         />
       </div>
-    </>
-  )
-}
+    </LanguageProvider>
+  );
+};
 
-export default App
+const LanguageToggle: React.FC = () => {
+  const { language, toggleLanguage } = useLanguage();
+
+  return (
+    <div className="language-toggle-container">
+      <button className="language-toggle" onClick={toggleLanguage}>
+        {translations[language].header.languageToggle}
+      </button>
+    </div>
+  );
+};
+
+export default App;

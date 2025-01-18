@@ -3,6 +3,8 @@ import type { Todo as TodoType } from '../../types';
 import React, { useState } from 'react';
 import { AiOutlineUp, AiOutlineDown, AiOutlineInbox } from 'react-icons/ai';
 import { motion, AnimatePresence } from 'framer-motion';
+import { translations } from '../../translation';
+import { useLanguage } from '../../hooks/lenguagueContext';
 import './Todos.css';
 
 interface Props {
@@ -15,6 +17,7 @@ interface Props {
 export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTodo }) => {
   const [isEditing, setIsEditing] = useState('');
   const categories = Array.from(new Set(todos.map((t) => t.category)));
+  const { language } = useLanguage();
   const [openCategories, setOpenCategories] = useState(() => {
     const initial: Record<string, boolean> = {};
     categories.forEach((cat) => {
@@ -103,19 +106,18 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
       {todos.length === 0 && (
         <div className="empty-state">
           <AiOutlineInbox className="empty-icon" />
-          <p className="empty-text">No hay tareas</p>
+          <p className="empty-text">{translations[language].todos.noTasks}</p>
         </div>
       )}
 
       {categories.map((cat) => {
         const tasks = todos.filter((t) => t.category === cat);
-
         return (
           <div key={cat} className="category-section">
             <div className="category-header" onClick={() => toggleCategory(cat)}>
               <h2 className="category-title">
                 {cat} <span className="task-count">({tasks.length})</span>
-              </h2>
+              </h2> 
               <button className="toggle-button">
                 {openCategories[cat] ? <AiOutlineUp /> : <AiOutlineDown />}
               </button>
@@ -144,8 +146,8 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
                         exit={{ opacity: 0 }}
                       >
                         <AiOutlineInbox className="empty-icon" />
-                        <p className="empty-text">Vacio</p>
-                      </motion.div>
+                        <p className="empty-text">{translations[language].todos.noTasks}</p>
+                        </motion.div>
                     ) : (
                       tasks.map((todo) => (
                         <motion.li

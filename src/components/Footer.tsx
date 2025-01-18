@@ -1,12 +1,14 @@
-import { type FilterValue } from '../types'
-import { Filters } from './Filters'
+import { type FilterValue } from '../types';
+import { Filters } from './Filters';
+import { useLanguage } from '../hooks/lenguagueContext';
+import { translations } from '../translation';
 
 interface Props {
-  handleFilterChange: (filter: FilterValue) => void
-  activeCount: number
-  completedCount: number
-  onClearCompleted: () => void
-  filterSelected: FilterValue
+  handleFilterChange: (filter: FilterValue) => void;
+  activeCount: number;
+  completedCount: number;
+  onClearCompleted: () => void;
+  filterSelected: FilterValue;
 }
 
 export const Footer: React.FC<Props> = ({
@@ -14,29 +16,29 @@ export const Footer: React.FC<Props> = ({
   completedCount,
   onClearCompleted,
   filterSelected,
-  handleFilterChange
+  handleFilterChange,
 }) => {
-  const singleActiveCount = activeCount === 1
-  const activeTodoWord = singleActiveCount ? 'tarea' : 'tareas'
+  const { language } = useLanguage();
+  const t = translations[language].footer;
+
+  const singleActiveCount = activeCount === 1;
+  const taskWord = singleActiveCount ? t.task : t.tasks;
+  const pluralSuffix = singleActiveCount ? '' : 's';
+  const pendingText = `${activeCount} ${taskWord} pendiente${pluralSuffix}`;
 
   return (
     <footer className="footer">
-
       <span className="todo-count">
-        <strong>{activeCount}</strong> {activeTodoWord} pendiente{!singleActiveCount && 's'}
+        {pendingText}
       </span>
-
       <Filters filterSelected={filterSelected} handleFilterChange={handleFilterChange} />
-
-      {
-        completedCount > 0 && (
-          <button
-            className="clear-completed"
-            onClick={onClearCompleted}>
-              Borrar completados
-          </button>
-        )
-      }
+      {completedCount > 0 && (
+        <button className="clear-completed" onClick={onClearCompleted}>
+          {t.clearCompleted}
+        </button>
+      )}
     </footer>
-  )
-}
+  );
+};
+
+
