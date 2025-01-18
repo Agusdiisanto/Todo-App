@@ -102,7 +102,6 @@ label {
   padding: 15px 20px;
   border: 2px solid rgba(108, 99, 255, 0.3);
   border-radius: 18px;
-  background: linear-gradient(135deg, #ffffff, #f9f9f9);
   box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
   outline: none;
   z-index: 10;
