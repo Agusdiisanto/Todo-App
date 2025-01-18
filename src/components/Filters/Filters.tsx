@@ -1,6 +1,7 @@
-import { type FilterValue } from '../types.js';
-import { translations } from '../translation';
-import { useLanguage } from '../hooks/lenguagueContext.js';
+import { FilterValue } from '../../types.js';
+import { useLanguage } from '../../hooks/lenguagueContext.js';
+import { translations } from '../../translation.js';
+import './Filters.css';
 
 interface Props {
   handleFilterChange: (filter: FilterValue) => void;

@@ -1,0 +1,72 @@
+.filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    background: linear-gradient(135deg, #ffffff, #f9f9f9);
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    font-family: 'Poppins', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .filters:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .filters li {
+    list-style: none;
+  }
+  
+  .filters a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    color: #6c63ff;
+    background: rgba(108, 99, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(108, 99, 255, 0.1);
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .filters a:hover {
+    background: rgba(108, 99, 255, 0.2);
+    color: #000000;
+    box-shadow: 0 6px 15px rgba(108, 99, 255, 0.3);
+    transform: scale(1.05);
+  }
+  
+  .filters a.selected {
+    background: #6c63ff;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
+  }
+  
+  @media (max-width: 768px) {
+    .filters {
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px;
+    }
+  
+    .filters a {
+      font-size: 16px;
+      padding: 8px 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .filters {
+      gap: 8px;
+    }
+  
+    .filters a {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+  }
+  

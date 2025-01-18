@@ -1,0 +1,37 @@
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+  }
+  
+  header h1 {
+    font-family: "Poppins", sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #333;
+    background: linear-gradient(135deg, #6c63ff, #b39ddb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  
+  @media (max-width: 768px) {
+    header h1 {
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      letter-spacing: 0.18em;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    header h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      letter-spacing: 0.15em;
+    }
+  }
+  

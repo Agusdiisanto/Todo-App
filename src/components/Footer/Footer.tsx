@@ -1,7 +1,8 @@
-import { type FilterValue } from '../types';
-import { Filters } from './Filters';
-import { useLanguage } from '../hooks/lenguagueContext';
-import { translations } from '../translation';
+import { type FilterValue } from '../../types';
+import { useLanguage } from '../../hooks/lenguagueContext';
+import { Filters } from '../Filters/Filters';
+import { translations } from '../../translation';
+import './Footer.css';
 
 interface Props {
   handleFilterChange: (filter: FilterValue) => void;

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import "./Todo.css"
 
 interface Props {
   id: string

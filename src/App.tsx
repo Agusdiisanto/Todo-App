@@ -1,5 +1,5 @@
-import { Footer } from './components/Footer';
-import { Header } from './components/Header';
+import { Footer } from './components/Footer/Footer';
+import { Header } from './components/Header/Header';
 import { Todos } from './components/Todos/Todos';
 import { useTodos } from './hooks/useTodos';
 import { LanguageProvider, useLanguage } from './hooks/lenguagueContext';
