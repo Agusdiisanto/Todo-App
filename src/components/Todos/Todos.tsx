@@ -134,8 +134,8 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
                   exit="closed"
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
-                  onDrop={(e) => handleDrop(e, cat)}
-                >
+                  onDrop={(e: React.DragEvent<HTMLUListElement>) => handleDrop(e, cat)}
+                  >
                   <AnimatePresence>
                     {tasks.length === 0 ? (
                       <motion.div
@@ -156,8 +156,7 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
                             todo.completed ? 'completed' : ''
                           } ${isEditing === todo.id ? 'editing' : ''}`}
                           draggable
-                          onDragStart={(e) => handleDragStart(e, todo.id)}
-                          onDragEnd={handleDragEnd}
+                          onDragStart={(e: React.DragEvent<HTMLLIElement>) => handleDragStart(e, todo.id)}                          onDragEnd={handleDragEnd}
                           onDoubleClick={() => setIsEditing(todo.id)}
                           variants={itemVariants}
                           initial="hidden"
