@@ -9,10 +9,20 @@ interface Props {
 export const Header: React.FC<Props> = ({ saveTodo }) => {
   const { language } = useLanguage();
 
+  const headerStyle: React.CSSProperties = {
+    fontSize: '4rem',
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    whiteSpace: 'nowrap',
+    letterSpacing: '0.1rem',
+  };
+
   return (
-    <header className="header">
-    <h1 className="header-title">{translations[language].header.title}</h1>
-    <CreateTodo saveTodo={saveTodo} />
+    <header>
+      <h1 style={headerStyle}>
+        {translations[language].header.title}
+      </h1>
+      <CreateTodo saveTodo={saveTodo} />
     </header>
   );
 };
