@@ -2,26 +2,26 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 26px;
+  padding: 16px 22px;
   width: 100%;
   background: linear-gradient(135deg, #ffffff, #f9f9f9);
-  border-radius: 18px;
-  border: 1px solid rgba(227, 227, 227, 0.8);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  margin-bottom: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(200, 200, 200, 0.6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
   transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
   position: relative;
 }
 
 .view:hover {
   background: #f4f4f4;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
 
 .toggle {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   appearance: none;
   background-color: #fff;
   border: 3px solid #6c63ff;
@@ -33,7 +33,7 @@
 .toggle:checked {
   background-color: #6c63ff;
   border-color: #6c63ff;
-  box-shadow: 0 0 12px rgba(108, 99, 255, 0.6);
+  box-shadow: 0 0 8px rgba(108, 99, 255, 0.5);
   transform: scale(1.1);
 }
 
@@ -43,11 +43,10 @@
 
 label {
   flex: 1;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   color: #333;
-  margin-left: 20px;
-  text-align: left;
+  margin-left: 16px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -60,12 +59,12 @@ label {
 }
 
 .destroy {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   background: linear-gradient(135deg, #ffffff, #f5f5f5);
-  border: 2px solid rgba(200, 200, 200, 0.8);
+  border: 1px solid rgba(180, 180, 180, 0.8);
   border-radius: 50%;
-  font-size: 22px;
+  font-size: 18px;
   color: #888;
   display: flex;
   align-items: center;
@@ -76,7 +75,7 @@ label {
 
 .destroy::before {
   content: "×";
-  font-size: 22px;
+  font-size: 18px;
   color: inherit;
   font-weight: bold;
 }
@@ -85,25 +84,25 @@ label {
   background: #ff6b6b;
   color: #fff;
   border-color: #ff6b6b;
-  box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
-  transform: scale(1.15);
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+  transform: scale(1.1);
 }
 
 .edit {
-  width: 100%;
-  max-width: calc(100% - 120px);
+  width: 90%;
+  font-size: 18px;
+  font-weight: 400;
+  color: #333;
+  padding: 12px 16px;
+  border: 2px solid rgba(108, 99, 255, 0.3);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15);
+  outline: none;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
-  font-size: 20px;
-  font-weight: 400;
-  color: #333;
-  padding: 15px 20px;
-  border: 2px solid rgba(108, 99, 255, 0.3);
-  border-radius: 18px;
-  box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
-  outline: none;
+  transform: translate(-50%, -50%);
   z-index: 10;
   opacity: 0;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -111,8 +110,7 @@ label {
 
 .edit:focus {
   border-color: #6c63ff;
-  box-shadow: 0 0 20px rgba(108, 99, 255, 0.5);
-  transform: translate(-50%, -50%) scale(1);
+  box-shadow: 0 0 12px rgba(108, 99, 255, 0.4);
   opacity: 1;
 }
 
@@ -132,54 +130,54 @@ label {
 
 @media (max-width: 768px) {
   .view {
-    padding: 16px 20px;
+    padding: 12px 16px;
   }
 
   label {
-    font-size: 18px;
-    margin-left: 15px;
+    font-size: 16px;
+    margin-left: 12px;
   }
 
   .edit {
-    font-size: 18px;
-    padding: 14px 16px;
+    font-size: 16px;
+    padding: 10px 14px;
   }
 
   .toggle {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
 
   .destroy {
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
   }
 }
 
 @media (max-width: 480px) {
   .view {
-    padding: 14px 16px;
+    padding: 10px 12px;
   }
 
   label {
-    font-size: 16px;
-    margin-left: 10px;
+    font-size: 14px;
+    margin-left: 8px;
   }
 
   .edit {
-    font-size: 16px;
-    padding: 12px 14px;
+    font-size: 14px;
+    padding: 8px 12px;
   }
 
   .toggle {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
   }
 
   .destroy {
-    width: 28px;
-    height: 28px;
-    font-size: 18px;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
   }
 }

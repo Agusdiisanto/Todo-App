@@ -1,3 +1,4 @@
+/* Contenedor principal para crear tareas */
 .create-todo-container {
   margin: 20px 0;
   display: flex;
@@ -6,6 +7,7 @@
   z-index: 1;
 }
 
+/* Wrapper del input principal */
 .input-wrapper {
   display: flex;
   align-items: center;
@@ -17,6 +19,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   width: 90vw;
+  max-width: 600px; 
 }
 
 .input-wrapper:focus-within {
@@ -24,6 +27,7 @@
   box-shadow: 0 6px 20px rgba(108, 99, 255, 0.5);
 }
 
+/* Botón para seleccionar categoría */
 .category-button {
   display: flex;
   justify-content: center;
@@ -37,6 +41,8 @@
   margin-right: 10px;
   font-size: 22px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .category-button:hover {
@@ -44,6 +50,15 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Icono o imagen dentro del botón */
+.category-button img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover; 
+}
+
+/* Input para escribir nueva tarea */
 .new-todo {
   flex: 1; 
   border: none;
@@ -64,6 +79,7 @@
   outline: none;
 }
 
+/* Menú desplegable de categorías */
 .category-menu {
   position: absolute;
   top: 70px;
@@ -82,7 +98,7 @@
   gap: 10px;
   scrollbar-width: thin;
   scrollbar-color: #6c63ff #e0e0e0;
-  z-index: 99999999;
+  z-index: 9999;
 }
 
 .category-menu::-webkit-scrollbar {
@@ -99,6 +115,7 @@
   border-radius: 8px;
 }
 
+/* Opciones dentro del menú desplegable */
 .category-option {
   display: flex;
   align-items: center;
@@ -130,6 +147,7 @@
   box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
 }
 
+/* Opciones seleccionadas */
 .category-option.selected {
   background: #6c63ff;
   color: #fff;
@@ -145,6 +163,7 @@
   color: #fff;
 }
 
+/* Toast (notificación emergente) */
 .toast {
   position: fixed;
   bottom: 20px;
@@ -160,7 +179,6 @@
   animation: slide-in-out 3s ease forwards;
 }
 
-/* Animación del Toast */
 @keyframes slide-in-out {
   0% {
     transform: translateX(-50%) translateY(30px);
@@ -176,6 +194,7 @@
   }
 }
 
+/* Responsividad */
 @media (max-width: 768px) {
   .input-wrapper {
     padding: 10px 12px;
@@ -211,10 +230,9 @@
   }
 
   .category-button {
-    width: 35px;
-    height: 35px;
+    width: 36px;
+    height: 36px;
     font-size: 18px;
-    margin-right: 8px;
   }
 
   .new-todo {
