@@ -45,7 +45,7 @@ const App: React.FC = () => {
 
 const LanguageToggle: React.FC = () => {
   const { language, toggleLanguage } = useLanguage();
-
+  
   return (
     <div className="language-toggle-container">
       <button className="language-toggle" onClick={toggleLanguage}>
