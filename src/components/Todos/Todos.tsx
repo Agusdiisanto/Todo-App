@@ -26,6 +26,8 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
     return initial;
   });
 
+  const categoryTranslations = translations[language].createTodo.categories;
+
   const containerVariants = {
     open: {
       height: 'auto',
@@ -112,11 +114,12 @@ export const Todos: React.FC<Props> = ({ todos, setCompleted, setTitle, removeTo
 
       {categories.map((cat) => {
         const tasks = todos.filter((t) => t.category === cat);
+        const translatedCategory = categoryTranslations[cat as keyof typeof categoryTranslations] || cat;
         return (
           <div key={cat} className="category-section">
             <div className="category-header" onClick={() => toggleCategory(cat)}>
               <h2 className="category-title">
-                {cat} <span className="task-count">({tasks.length})</span>
+                {translatedCategory} <span className="task-count">({tasks.length})</span>
               </h2> 
               <button className="toggle-button">
                 {openCategories[cat] ? <AiOutlineUp /> : <AiOutlineDown />}

@@ -54,7 +54,7 @@
   .filters {
     display: flex;
     gap: 10px;
-    flex-wrap: wrap; /* Asegura que los botones no se desborden */
+    flex-wrap: wrap; 
   }
   
   .filters button {
@@ -88,7 +88,7 @@
       flex-direction: column;
       gap: 15px;
       padding: 15px 20px;
-      text-align: center; /* Mejor alineación */
+      text-align: center; 
     }
   
     .todo-count {
@@ -97,14 +97,14 @@
     }
   
     .filters {
-      justify-content: center; /* Centra los botones */
+      justify-content: center;
       gap: 8px;
     }
   
     .clear-completed {
       font-size: 14px;
       padding: 8px 15px;
-      width: 100%; /* Asegura que ocupe todo el ancho disponible */
+      width: 100%; 
     }
   }
   
